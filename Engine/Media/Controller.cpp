@@ -19,19 +19,11 @@
 MediaProcController media;
 
 int MediaProcController::ownInit() {
-	av_register_all();
 	av_log_set_level(AV_LOG_QUIET);
 	av_log_set_callback(logLine);
 	HardwareDecoderIFace::reg();
-	int error = av_lockmgr_register(lockManager);
-	if (!error) {
-		audioSpec = AudioSpec();
-		error     = audioSpec.init(ons.audio_format);
-	} else {
-		sendToLog(LogLevel::Error, "Failed to init media thread safety\n");
-	}
-
-	return error;
+  audioSpec = AudioSpec();
+  return audioSpec.init(ons.audio_format);
 }
 
 int MediaProcController::ownDeinit() {
@@ -76,31 +68,23 @@ int MediaProcController::AudioSpec::init(const SDL_AudioSpec &spec) {
 	}
 
 	// Grab the channels
-	channelLayout = av_get_default_channel_layout(spec.channels);
+  switch (spec.channels) {
+    case 1:
+      channelLayout.u.mask = AV_CH_LAYOUT_MONO;
+      break;
+    case 2:
+      channelLayout.u.mask = AV_CH_LAYOUT_STEREO;
+      break;
+    default:
+			sendToLog(LogLevel::Error, "Unsupported output audio channels\n");
+			return -1;
+  }
 	channels      = spec.channels;
 
 	// Grab the frequency
 	frequency = spec.freq;
 
 	return 0;
-}
-
-int MediaProcController::lockManager(void **mutex, AVLockOp op) {
-	switch (op) {
-		case AV_LOCK_CREATE:
-			*mutex = SDL_CreateMutex();
-			if (!*mutex)
-				return 1;
-			return 0;
-		case AV_LOCK_OBTAIN:
-			return SDL_LockMutex(static_cast<SDL_mutex *>(*mutex)) != 0;
-		case AV_LOCK_RELEASE:
-			return SDL_UnlockMutex(static_cast<SDL_mutex *>(*mutex)) != 0;
-		case AV_LOCK_DESTROY:
-			SDL_DestroyMutex(static_cast<SDL_mutex *>(*mutex));
-			return 0;
-	}
-	return 1;
 }
 
 void MediaProcController::logLine(void *inst, int level, const char *fmt, va_list args) {
@@ -628,8 +612,8 @@ void MediaProcController::Decoder::decodeFrame(MediaEntries index) {
 	} while (true);
 }
 
-AVCodec *MediaProcController::Decoder::findCodec(AVCodecContext *context) {
-	AVCodec *codec = nullptr;
+const AVCodec *MediaProcController::Decoder::findCodec(AVCodecContext *context) {
+	const AVCodec *codec = nullptr;
 
 	// Setup hw acceleration
 	if (context->codec_type == AVMEDIA_TYPE_VIDEO && media.hardwareDecoding) {

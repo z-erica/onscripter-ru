@@ -262,10 +262,12 @@ void ScriptParser::resetDefineFlags() {
 	effect_blank    = 10;
 	effect_cut_flag = false;
 
-	auto &effect    = effect_links.front();
-	effect.no       = 0;
-	effect.effect   = 0;
-	effect.duration = 0;
+  if (!effect_links.empty()) {
+    auto &effect    = effect_links.front();
+    effect.no       = 0;
+    effect.effect   = 0;
+    effect.duration = 0;
+  }
 
 	window_effect.effect   = 1;
 	window_effect.duration = 0;
