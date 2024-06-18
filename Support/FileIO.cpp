@@ -373,7 +373,7 @@ bool FileIO::shellOpen(const std::string &path, FileType type) {
 	return !system(cmd.c_str());
 #elif defined(LINUX)
 	auto tryXdgOpen = [](const std::string &target) {
-		pid_t child = vfork();
+		pid_t child = fork();
 		if (child == -1) {
 			// Parent, failed
 			sendToLog(LogLevel::Error, "Could not open `%s': fork error: %s\n", target.c_str(), strerror(errno));
@@ -604,7 +604,7 @@ bool FileIO::setStorageDir(bool force_userdir) {
 #elif defined(LINUX)
 	// On Linux (and similar *nixen) save to ~/.appname/
 	const char *home = getHomeDir();
-	std::snprintf(storageDir, PATH_MAX, "%s.%s%c", home, applicationName, DELIMITER);
+	std::snprintf(storageDir, PATH_MAX, "%s/.config/%s%c", home, applicationName, DELIMITER);
 #elif defined(IOS) || defined(DROID)
 	// On iOS and drod store in SaveData folder inside the data directory
 	const char *launch = getLaunchDir();
@@ -722,7 +722,7 @@ FILE *FileIO::openFile(const std::string &path, const char *mode, bool unicode) 
 
 	// This check is here mainly for debugging, on Linux there may be other error codes
 	// I think EPERM at the very least, and we should not crash on them.
-#if 1
+#if 0
 	// The check is written according to BSD docs.
 	if (!fp && errno != EACCES && errno != ENOENT)
 		throw std::runtime_error("Failed to open file " + path + ", errno: " + std::to_string(errno));

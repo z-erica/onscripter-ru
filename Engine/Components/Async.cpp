@@ -9,7 +9,6 @@
 
 #include "Engine/Components/Async.hpp"
 #include "Engine/Core/ONScripter.hpp"
-#include "Engine/Core/Parser.hpp"
 #include "Engine/Media/Controller.hpp"
 #include "Engine/Layers/Subtitle.hpp"
 #include "Support/FileDefs.hpp"

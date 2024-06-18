@@ -13,8 +13,6 @@ extern "C" {
 #include <libavutil/pixdesc.h>
 }
 
-#include <iostream>
-
 //"Well known" framerate
 //Should be noticed that this function works approximately, because the timeCodes received are taken before decoding
 long double MediaProcController::VideoDecoder::getVideoFramerate(bool &isVFR, bool &isCorrupted) {

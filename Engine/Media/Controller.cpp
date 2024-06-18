@@ -649,7 +649,6 @@ const AVCodec *MediaProcController::Decoder::findCodec(AVCodecContext *context) 
 		int err = avcodec_open2(context, codec, nullptr);
 		if (err < 0) {
 			sendToLog(LogLevel::Error, "Unable to open decoder %d\n", err);
-			avcodec_close(context);
 			return nullptr;
 		}
 	}
