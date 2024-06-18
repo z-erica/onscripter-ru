@@ -602,9 +602,13 @@ bool FileIO::setStorageDir(bool force_userdir) {
 	else
 		storageCloudDir[0] = '\0';
 #elif defined(LINUX)
-	// On Linux (and similar *nixen) save to ~/.appname/
 	const char *home = getHomeDir();
-	std::snprintf(storageDir, PATH_MAX, "%s/.config/%s%c", home, applicationName, DELIMITER);
+  const char *xdg_config_dir = std::getenv("XDG_DATA_DIR");
+  if (xdg_config_dir) {
+    std::snprintf(storageDir, PATH_MAX, "%s/%s%c", xdg_config_dir, applicationName, DELIMITER);
+  } else {
+    std::snprintf(storageDir, PATH_MAX, "%s/.local/share/%s%c", home, applicationName, DELIMITER);
+  }
 #elif defined(IOS) || defined(DROID)
 	// On iOS and drod store in SaveData folder inside the data directory
 	const char *launch = getLaunchDir();
