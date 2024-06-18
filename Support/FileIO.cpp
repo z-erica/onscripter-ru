@@ -373,7 +373,7 @@ bool FileIO::shellOpen(const std::string &path, FileType type) {
 	return !system(cmd.c_str());
 #elif defined(LINUX)
 	auto tryXdgOpen = [](const std::string &target) {
-		pid_t child = vfork();
+		pid_t child = fork();
 		if (child == -1) {
 			// Parent, failed
 			sendToLog(LogLevel::Error, "Could not open `%s': fork error: %s\n", target.c_str(), strerror(errno));
