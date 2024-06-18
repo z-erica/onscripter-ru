@@ -1,38 +1,65 @@
-project('onscripter-ru', ['cpp', 'c'])
+project(
+  'onscripter-ru',
+  ['cpp', 'c'],
+)
 
 if host_machine.system() == 'linux'
   add_global_arguments('-DLINUX', language: ['c', 'cpp'])
 endif
 
-add_global_arguments('-DPUBLIC_RELEASE', language : ['c', 'cpp'])
+add_global_arguments('-DPUBLIC_RELEASE', language: ['c', 'cpp'])
 
 embed = executable('embed', 'Tools/embed/embed.c')
-resources = custom_target('resources',
-  output : 'Resources.cpp',
-  command : [
+resources = custom_target(
+  'resources',
+  output: 'Resources.cpp',
+  command: [
     embed,
-    '@SOURCE_ROOT@/Resources/Images/breakup-cellforms.png', 'breakup-cellforms.png',
-    '@SOURCE_ROOT@/Resources/Images/icon.png', 'icon.png',
-    '@SOURCE_ROOT@/Resources/Shaders/alphaOutsideTextures.frag', 'alphaOutsideTextures.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/blendByMask.frag', 'blendByMask.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/blurH.frag', 'blurH.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/blurV.frag', 'blurV.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/breakup.frag', 'breakup.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/colorModification.frag', 'colorModification.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/colourConversion.frag', 'colourConversion.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/cropByMask.frag', 'cropByMask.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/defaultVertex.vert', 'defaultVertex.vert',
-    '@SOURCE_ROOT@/Resources/Shaders/effectTrvswave.frag', 'effectTrvswave.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/effectWarp.frag', 'effectWarp.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/effectWhirl.frag', 'effectWhirl.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/glassSmash.frag', 'glassSmash.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/glyphGradient.frag', 'glyphGradient.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/mergeAlpha.frag', 'mergeAlpha.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/multiplyAlpha.frag', 'multiplyAlpha.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/pixelate.frag', 'pixelate.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/renderSubtitles.frag', 'renderSubtitles.frag',
-    '@SOURCE_ROOT@/Resources/Shaders/textFade.frag', 'textFade.frag',
-    '@OUTPUT@'])
+    '@SOURCE_ROOT@/Resources/Images/breakup-cellforms.png',
+    'breakup-cellforms.png',
+    '@SOURCE_ROOT@/Resources/Images/icon.png',
+    'icon.png',
+    '@SOURCE_ROOT@/Resources/Shaders/alphaOutsideTextures.frag',
+    'alphaOutsideTextures.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/blendByMask.frag',
+    'blendByMask.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/blurH.frag',
+    'blurH.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/blurV.frag',
+    'blurV.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/breakup.frag',
+    'breakup.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/colorModification.frag',
+    'colorModification.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/colourConversion.frag',
+    'colourConversion.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/cropByMask.frag',
+    'cropByMask.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/defaultVertex.vert',
+    'defaultVertex.vert',
+    '@SOURCE_ROOT@/Resources/Shaders/effectTrvswave.frag',
+    'effectTrvswave.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/effectWarp.frag',
+    'effectWarp.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/effectWhirl.frag',
+    'effectWhirl.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/glassSmash.frag',
+    'glassSmash.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/glyphGradient.frag',
+    'glyphGradient.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/mergeAlpha.frag',
+    'mergeAlpha.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/multiplyAlpha.frag',
+    'multiplyAlpha.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/pixelate.frag',
+    'pixelate.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/renderSubtitles.frag',
+    'renderSubtitles.frag',
+    '@SOURCE_ROOT@/Resources/Shaders/textFade.frag',
+    'textFade.frag',
+    '@OUTPUT@',
+  ],
+)
 
 sources = [
   'Engine/Components/Async.cpp',
@@ -103,9 +130,11 @@ sources = [
 
 c = meson.get_compiler('c')
 
-smpeg2 = c.find_library('smpeg2', has_headers : ['smpeg2/smpeg.h'])
+smpeg2 = c.find_library('smpeg2', has_headers: ['smpeg2/smpeg.h'])
 
-executable('onscripter-ru', sources,
+executable(
+  'onscripter-ru',
+  sources,
   dependencies: [
     dependency('glew'),
     dependency('libass'),
@@ -124,4 +153,5 @@ executable('onscripter-ru', sources,
     smpeg2,
     dependency('vorbisfile'),
     dependency('zlib'),
-  ])
+  ],
+)
