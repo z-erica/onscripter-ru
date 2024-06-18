@@ -1,6 +1,11 @@
 project(
   'onscripter-ru',
   ['cpp', 'c'],
+  default_options: [
+    'c_std=c18',
+    'cpp_std=c++20',
+    'warning_level=2',
+  ],
 )
 
 if host_machine.system() == 'linux'
