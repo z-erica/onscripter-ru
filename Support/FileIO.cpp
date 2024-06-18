@@ -722,7 +722,7 @@ FILE *FileIO::openFile(const std::string &path, const char *mode, bool unicode) 
 
 	// This check is here mainly for debugging, on Linux there may be other error codes
 	// I think EPERM at the very least, and we should not crash on them.
-#if 1
+#if 0
 	// The check is written according to BSD docs.
 	if (!fp && errno != EACCES && errno != ENOENT)
 		throw std::runtime_error("Failed to open file " + path + ", errno: " + std::to_string(errno));
