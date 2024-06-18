@@ -361,7 +361,7 @@ bool SteamController::rumble(float strength, int length) {
 
 	auto submit = [&dataBlob, this]() {
 		auto packetData = new uint8_t[LIBUSB_CONTROL_SETUP_SIZE + sizeof(dataBlob)];
-		libusb_fill_control_setup(packetData, LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT,
+		libusb_fill_control_setup(packetData, static_cast<int>(LIBUSB_REQUEST_TYPE_CLASS) | static_cast<int>(LIBUSB_RECIPIENT_INTERFACE) | LIBUSB_ENDPOINT_OUT,
 		                          RequestSetReport, (ReportTypeOutput << 8) | 1, 2, sizeof(dataBlob));
 		std::memcpy(&packetData[LIBUSB_CONTROL_SETUP_SIZE], dataBlob, sizeof(dataBlob));
 
@@ -458,7 +458,7 @@ bool DS3Controller::configure() {
 	    0x42, 0x0C, 0x00, 0x00};
 
 	auto packetData = new uint8_t[LIBUSB_CONTROL_SETUP_SIZE + sizeof(dataBlob)];
-	libusb_fill_control_setup(packetData, LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT,
+	libusb_fill_control_setup(packetData, static_cast<int>(LIBUSB_REQUEST_TYPE_CLASS) | static_cast<int>(LIBUSB_RECIPIENT_INTERFACE) | LIBUSB_ENDPOINT_OUT,
 	                          RequestSetReport, (ReportTypeFeature << 8) | 0xF4, 0x0, sizeof(dataBlob));
 	std::memcpy(&packetData[LIBUSB_CONTROL_SETUP_SIZE], dataBlob, sizeof(dataBlob));
 
@@ -544,7 +544,7 @@ bool DS3Controller::rumble(float strength, int length) {
 	dataBlob[RumblePowerR]                            = strength > 0;
 
 	auto packetData = new uint8_t[LIBUSB_CONTROL_SETUP_SIZE + sizeof(dataBlob)];
-	libusb_fill_control_setup(packetData, LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT,
+	libusb_fill_control_setup(packetData, static_cast<int>(LIBUSB_REQUEST_TYPE_CLASS) | static_cast<int>(LIBUSB_RECIPIENT_INTERFACE) | LIBUSB_ENDPOINT_OUT,
 	                          RequestSetReport, (ReportTypeOutput << 8) | 1, 0x0, sizeof(dataBlob));
 	std::memcpy(&packetData[LIBUSB_CONTROL_SETUP_SIZE], dataBlob, sizeof(dataBlob));
 
@@ -635,7 +635,7 @@ bool DS4Controller::rumble(float strength, int length) {
 	dataBlob[RumblePowerSmall]                                = strength * 255;
 
 	auto packetData = new uint8_t[LIBUSB_CONTROL_SETUP_SIZE + sizeof(dataBlob)];
-	libusb_fill_control_setup(packetData, LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT,
+	libusb_fill_control_setup(packetData, static_cast<int>(LIBUSB_REQUEST_TYPE_CLASS) | static_cast<int>(LIBUSB_RECIPIENT_INTERFACE) | LIBUSB_ENDPOINT_OUT,
 	                          RequestSetReport, (ReportTypeOutput << 8) | 1, 0x0, sizeof(dataBlob));
 	std::memcpy(&packetData[LIBUSB_CONTROL_SETUP_SIZE], dataBlob, sizeof(dataBlob));
 
