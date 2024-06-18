@@ -159,4 +159,5 @@ executable(
     dependency('vorbisfile'),
     dependency('zlib'),
   ],
+  install: true,
 )
