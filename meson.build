@@ -6,6 +6,7 @@ project(
     'cpp_std=c++20',
     'warning_level=2',
   ],
+  version: '3572',
 )
 
 if host_machine.system() == 'linux'
