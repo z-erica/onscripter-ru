@@ -603,9 +603,9 @@ bool FileIO::setStorageDir(bool force_userdir) {
 		storageCloudDir[0] = '\0';
 #elif defined(LINUX)
 	const char *home = getHomeDir();
-  const char *xdg_config_dir = std::getenv("XDG_DATA_DIR");
-  if (xdg_config_dir) {
-    std::snprintf(storageDir, PATH_MAX, "%s/%s%c", xdg_config_dir, applicationName, DELIMITER);
+  const char *xdg_data_dir = std::getenv("XDG_DATA_DIR");
+  if (xdg_data_dir) {
+    std::snprintf(storageDir, PATH_MAX, "%s/%s%c", xdg_data_dir, applicationName, DELIMITER);
   } else {
     std::snprintf(storageDir, PATH_MAX, "%s/.local/share/%s%c", home, applicationName, DELIMITER);
   }
