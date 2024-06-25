@@ -12,10 +12,10 @@
 #include "Engine/Graphics/Common.hpp"
 #include "Engine/Core/ONScripter.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #ifdef WIN32
 #include <windows.h>
-#include <SDL2/SDL_syswm.h>
+#include <SDL_syswm.h>
 #include "Resources/Support/WinRes.hpp"
 #endif
 

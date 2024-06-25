@@ -16,7 +16,7 @@
 #include "Engine/Graphics/GPU.hpp"
 #include "Support/FileDefs.hpp"
 
-#include <SDL2/SDL_gpu_GLES_2.h>
+#include <SDL_gpu_GLES_2.h>
 
 GPU_RendererID GPUController::makeRendererIdANGLE2() {
 	SDL_SetHint(SDL_HINT_OPENGL_ES_DRIVER, "1");

@@ -14,7 +14,7 @@
 #include "Support/KeyState.hpp"
 #include "Support/Clock.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <unordered_set>
 #include <deque>

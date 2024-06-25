@@ -14,7 +14,7 @@
 #include "Engine/Entities/Font.hpp"
 #include "Support/Unicode.hpp"
 
-#include <SDL2/SDL_gpu.h>
+#include <SDL_gpu.h>
 
 #include <utility>
 #include <deque>

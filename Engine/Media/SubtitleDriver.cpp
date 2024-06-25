@@ -12,7 +12,7 @@
 #include "Engine/Components/Async.hpp"
 #include "Support/FileIO.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 /* libass debug log function */
 static void ass_msg_callback(int level, const char *fmt, va_list va, void * /*data*/) {

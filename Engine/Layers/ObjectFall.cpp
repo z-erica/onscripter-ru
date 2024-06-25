@@ -11,7 +11,7 @@
 #include "Engine/Core/ONScripter.hpp"
 #include "Engine/Graphics/GPU.hpp"
 
-#include <SDL2/SDL_gpu.h>
+#include <SDL_gpu.h>
 
 #include <cmath>
 #include <random>

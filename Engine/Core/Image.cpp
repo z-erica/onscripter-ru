@@ -15,7 +15,7 @@
 #include "Engine/Graphics/PNG.hpp"
 #include "Engine/Graphics/Pool.hpp"
 
-#include <SDL2/SDL_thread.h>
+#include <SDL_thread.h>
 
 #include <new>
 #include <string>

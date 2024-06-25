@@ -12,7 +12,7 @@
 #include "External/Compatibility.hpp"
 #include "Support/Clock.hpp"
 
-#include <SDL2/SDL_gpu.h>
+#include <SDL_gpu.h>
 
 #include <cmath>
 

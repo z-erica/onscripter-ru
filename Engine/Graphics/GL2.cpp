@@ -16,7 +16,7 @@
 #include "Engine/Graphics/GPU.hpp"
 #include "Support/FileDefs.hpp"
 
-#include <SDL2/SDL_gpu_OpenGL_2.h>
+#include <SDL_gpu_OpenGL_2.h>
 
 GPU_RendererID GPUController::makeRendererIdGL2() {
 	return GPU_MakeRendererID("OpenGL 2", GPU_RENDERER_OPENGL_2, 2, 1);

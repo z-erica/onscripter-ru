@@ -12,8 +12,8 @@
 #include "External/Compatibility.hpp"
 #include "Engine/Components/Base.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_gpu.h>
+#include <SDL.h>
+#include <SDL_gpu.h>
 
 #include <memory>
 

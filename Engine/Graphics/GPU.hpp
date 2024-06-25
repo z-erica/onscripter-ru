@@ -15,8 +15,8 @@
 #include "Engine/Entities/Breakup.hpp"
 #include "Support/Cache.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_gpu.h>
+#include <SDL.h>
+#include <SDL_gpu.h>
 
 #include <string>
 #include <unordered_map>

@@ -11,8 +11,8 @@
 
 #include "External/Compatibility.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_gpu.h>
+#include <SDL.h>
+#include <SDL_gpu.h>
 
 struct DirtyRect {
 	void setDimension(const SDL_Point &canvas, const GPU_Rect &camera_center);

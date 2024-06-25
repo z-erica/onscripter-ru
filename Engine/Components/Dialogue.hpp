@@ -18,8 +18,8 @@
 #include "Engine/Handlers/Script.hpp"
 #include "Support/Clock.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_gpu.h>
+#include <SDL.h>
+#include <SDL_gpu.h>
 
 #include <utility>
 #include <deque>

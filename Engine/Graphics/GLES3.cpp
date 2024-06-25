@@ -20,7 +20,7 @@
 #include "Engine/Graphics/GPU.hpp"
 #include "Support/FileDefs.hpp"
 
-#include <SDL2/SDL_gpu_GLES_3.h>
+#include <SDL_gpu_GLES_3.h>
 
 GPU_RendererID GPUController::makeRendererIdANGLE3() {
 	SDL_SetHint(SDL_HINT_OPENGL_ES_DRIVER, "1");

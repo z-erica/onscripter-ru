@@ -14,9 +14,9 @@
 #include "Support/Camera.hpp"
 #include "Support/Clock.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_gpu.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_gpu.h>
 
 #include <utility>
 #include <map>

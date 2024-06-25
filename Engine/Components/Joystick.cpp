@@ -10,7 +10,7 @@
 #include "Engine/Components/Joystick.hpp"
 #include "Engine/Core/ONScripter.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <array>
 #include <unordered_map>

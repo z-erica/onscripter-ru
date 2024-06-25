@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #include <objc/runtime.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 bool backupDisable(const char *path) {
 	NSString *nspath = [[NSString alloc] initWithCString:path encoding:NSUTF8StringEncoding];

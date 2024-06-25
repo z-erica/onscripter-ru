@@ -19,7 +19,7 @@
 #include "Engine/Handlers/LUA.hpp"
 #endif
 
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 
 #include <list>
 #include <queue>

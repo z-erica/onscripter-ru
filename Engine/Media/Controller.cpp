@@ -11,7 +11,7 @@
 #include "Engine/Core/ONScripter.hpp"
 #include "Engine/Components/Async.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <stdexcept>
 #include <cassert>

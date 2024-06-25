@@ -12,7 +12,7 @@
 #include "External/Compatibility.hpp"
 #include "Engine/Layers/Layer.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <vector>
 #include <cmath>

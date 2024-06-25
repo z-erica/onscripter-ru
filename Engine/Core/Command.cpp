@@ -16,7 +16,7 @@
 #include "Resources/Support/Version.hpp"
 #include "Support/FileIO.hpp"
 
-#include <SDL2/SDL_thread.h>
+#include <SDL_thread.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 

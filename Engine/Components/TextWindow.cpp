@@ -11,7 +11,7 @@
 #include "Engine/Components/Dialogue.hpp"
 #include "Support/Clock.hpp"
 
-#include <SDL2/SDL_gpu.h>
+#include <SDL_gpu.h>
 
 #include <vector>
 
