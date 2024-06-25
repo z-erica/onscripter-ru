@@ -186,6 +186,9 @@ executable(
     dependency('vorbisfile'),
     dependency('zlib'),
   ],
+  include_directories: [
+    '3rdparty/sdl-gpu/include',
+  ],
   link_with: sdl_gpu,
   install: true,
 )
