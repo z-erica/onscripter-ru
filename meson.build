@@ -138,11 +138,38 @@ c = meson.get_compiler('c')
 
 smpeg2 = c.find_library('smpeg2', has_headers: ['smpeg2/smpeg.h'])
 
+sdl_gpu = static_library('sdl_gpu',
+  [
+    '3rdparty/sdl-gpu/src/SDL_gpu.c',
+    '3rdparty/sdl-gpu/src/SDL_gpu_matrix.c',
+    '3rdparty/sdl-gpu/src/SDL_gpu_renderer.c',
+    '3rdparty/sdl-gpu/src/SDL_gpu_shapes.c',
+    '3rdparty/sdl-gpu/src/externals/stb_image/stb_image.c',
+    '3rdparty/sdl-gpu/src/externals/stb_image_write/stb_image_write.c',
+    '3rdparty/sdl-gpu/src/renderer_GLES_1.c',
+    '3rdparty/sdl-gpu/src/renderer_GLES_2.c',
+    '3rdparty/sdl-gpu/src/renderer_GLES_3.c',
+    '3rdparty/sdl-gpu/src/renderer_OpenGL_1.c',
+    '3rdparty/sdl-gpu/src/renderer_OpenGL_1_BASE.c',
+    '3rdparty/sdl-gpu/src/renderer_OpenGL_2.c',
+    '3rdparty/sdl-gpu/src/renderer_OpenGL_3.c',
+    '3rdparty/sdl-gpu/src/renderer_OpenGL_4.c',
+  ],
+  include_directories: [
+    '3rdparty/sdl-gpu/include',
+    '3rdparty/sdl-gpu/src/externals/stb_image',
+    '3rdparty/sdl-gpu/src/externals/stb_image_write',
+  ],
+  c_args: ['-DSDL_GPU_DISABLE_GLES'],
+  dependencies: [
+    dependency('glew'),
+    dependency('SDL2'),
+  ])
+
 executable(
   'onscripter-ru',
   sources,
   dependencies: [
-    dependency('glew'),
     dependency('libass'),
     dependency('libavcodec'),
     dependency('libavformat'),
@@ -153,12 +180,12 @@ executable(
     dependency('libusb-1.0'),
     dependency('freetype2'),
     dependency('SDL2'),
-    dependency('SDL2_gpu'),
     dependency('SDL2_image'),
     dependency('SDL2_mixer'),
     smpeg2,
     dependency('vorbisfile'),
     dependency('zlib'),
   ],
+  link_with: sdl_gpu,
   install: true,
 )
