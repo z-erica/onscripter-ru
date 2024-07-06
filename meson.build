@@ -166,17 +166,32 @@ sdl_gpu = static_library('sdl_gpu',
     dependency('SDL2'),
   ])
 
+libavcodec_dep = dependency('libavcodec',
+  fallback: ['ffmpeg', 'libavcodec_dep'])
+
+libavformat_dep = dependency('libavformat',
+  fallback: ['ffmpeg', 'libavformat_dep'])
+
+libavutil_dep = dependency('libavutil',
+  fallback: ['ffmpeg', 'libavutil_dep'])
+
+libswresample_dep = dependency('libswresample',
+  fallback: ['ffmpeg', 'libswresample_dep'])
+
+libswscale_dep = dependency('libswscale',
+  fallback: ['ffmpeg', 'libswscale_dep'])
+
 executable(
   'onscripter-ru',
   sources,
   dependencies: [
     dependency('libass'),
-    dependency('libavcodec'),
-    dependency('libavformat'),
-    dependency('libavutil'),
+    libavcodec_dep,
+    libavformat_dep,
+    libavutil_dep,
     dependency('libpng'),
-    dependency('libswresample'),
-    dependency('libswscale'),
+    libswresample_dep,
+    libswscale_dep,
     dependency('libusb-1.0'),
     dependency('freetype2'),
     dependency('SDL2'),
