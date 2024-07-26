@@ -13,7 +13,7 @@
 		#define _WINUSER_H
 		#define _WINGDI_H
 		#endif
-		#include "glew.h"
+		#include <GL/glew.h>
 	#endif
 
 	#if defined(GL_EXT_bgr) && !defined(GL_BGR)
