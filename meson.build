@@ -15,7 +15,7 @@ endif
 
 add_global_arguments('-DPUBLIC_RELEASE', language: ['c', 'cpp'])
 
-embed = executable('embed', 'Tools/embed/embed.c')
+embed = executable('embed', 'Tools/embed/embed.c', native: true)
 resources = custom_target(
   'resources',
   output: 'Resources.cpp',
