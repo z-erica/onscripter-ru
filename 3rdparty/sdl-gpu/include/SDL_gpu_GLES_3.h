@@ -6,11 +6,20 @@
 
 #if !defined(SDL_GPU_DISABLE_GLES) && !defined(SDL_GPU_DISABLE_GLES_3)
 
+#ifndef GL_GLEXT_PROTOTYPES
+    #define GL_GLEXT_PROTOTYPES 1
+#endif
+
 #ifdef __IPHONEOS__
     #include <OpenGLES/ES3/gl.h>
     #include <OpenGLES/ES3/glext.h>
 #elif defined(SDL_GPU_DYNAMIC_GLES_3)
     #include "gl3stub.h"
+    #ifdef SDL_GPU_DYNAMIC_GLES_2
+        #include "gl2stub_ext.h"
+    #else
+        #include "GLES2/gl2ext.h"
+    #endif
 #else
     #include "GLES3/gl3.h"
     #include "GLES2/gl2ext.h"
@@ -131,6 +140,7 @@ typedef struct ContextData_GLES_3
 	GPU_ComparisonEnum last_depth_function;
 	
 	GPU_Image* last_image;
+	GPU_Target* last_target;
 	float* blit_buffer;  // Holds sets of 4 vertices, each with interleaved position, tex coords, and colors (e.g. [x0, y0, z0, s0, t0, r0, g0, b0, a0, ...]).
 	unsigned short blit_buffer_num_vertices;
 	unsigned short blit_buffer_max_num_vertices;

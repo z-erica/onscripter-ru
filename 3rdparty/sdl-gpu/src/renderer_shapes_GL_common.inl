@@ -2,6 +2,14 @@
 See a particular renderer's *.c file for specifics. */
 
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
+
+
+
+
 // All shapes start this way for setup and so they can access the blit buffer properly
 #define BEGIN_UNTEXTURED(function_name, shape, num_additional_vertices, num_additional_indices) \
 	GPU_CONTEXT_DATA* cdata; \
@@ -29,7 +37,7 @@ See a particular renderer's *.c file for specifics. */
         return; \
     } \
      \
-    if(!SetActiveTarget(renderer, target)) \
+    if(!bindFramebuffer(renderer, target)) \
     { \
         GPU_PushErrorCode(function_name, GPU_ERROR_BACKEND_ERROR, "Failed to bind framebuffer."); \
         return; \
@@ -76,18 +84,6 @@ See a particular renderer's *.c file for specifics. */
 
 
 
-#define SDL_GPU_CIRCLE_SEGMENT_ANGLE_FACTOR 0.625f
-
-
-#define CALCULATE_CIRCLE_DT_AND_SEGMENTS(radius) \
-	dt = SDL_GPU_CIRCLE_SEGMENT_ANGLE_FACTOR/sqrtf(radius);  /* s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good */ \
-	numSegments = (int)(2*PI/dt) + 1; \
-	\
-	if(numSegments < 16) \
-	{ \
-		numSegments = 16; \
-		dt = 2*PI/(numSegments-1); \
-	}
 
 
 static float SetLineThickness(GPU_Renderer* renderer, float thickness)
@@ -190,7 +186,7 @@ static void Arc(GPU_Renderer* renderer, GPU_Target* target, float x, float y, fl
     }
 
 
-    dt = ((end_angle - start_angle)/360)*(SDL_GPU_CIRCLE_SEGMENT_ANGLE_FACTOR/sqrtf(outer_radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    dt = ((end_angle - start_angle)/360)*(1.25f/sqrtf(outer_radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
 
     numSegments = (int)((fabs(end_angle - start_angle)*PI/180)/dt);
     if(numSegments == 0)
@@ -267,7 +263,7 @@ static void ArcFilled(GPU_Renderer* renderer, GPU_Target* target, float x, float
         end_angle -= 360;
     }
     
-    dt = ((end_angle - start_angle)/360)*(SDL_GPU_CIRCLE_SEGMENT_ANGLE_FACTOR/sqrtf(radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    dt = ((end_angle - start_angle)/360)*(1.25f/sqrtf(radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
 
     numSegments = (int)((fabs(end_angle - start_angle)*RAD_PER_DEG)/dt);
     if(numSegments == 0)
@@ -326,10 +322,8 @@ static void Circle(GPU_Renderer* renderer, GPU_Target* target, float x, float y,
     float t = thickness/2;
     float inner_radius = radius - t;
     float outer_radius = radius + t;
-    float dt;
-    int numSegments;
-	
-	CALCULATE_CIRCLE_DT_AND_SEGMENTS(outer_radius);
+    float dt = (1.25f/sqrtf(outer_radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    int numSegments = (int)(2*PI/dt)+1;
     
     float tempx;
     float c = cosf(dt);
@@ -359,12 +353,10 @@ static void Circle(GPU_Renderer* renderer, GPU_Target* target, float x, float y,
 
 static void CircleFilled(GPU_Renderer* renderer, GPU_Target* target, float x, float y, float radius, SDL_Color color)
 {
-    float dt;
+    float dt = (1.25f/sqrtf(radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
     float dx, dy;
-    int numSegments;
+    int numSegments = (int)(2*PI/dt)+1;
     int i;
-	
-	CALCULATE_CIRCLE_DT_AND_SEGMENTS(radius);
     
     float tempx;
     float c = cosf(dt);
@@ -411,10 +403,8 @@ static void Ellipse(GPU_Renderer* renderer, GPU_Target* target, float x, float y
     float outer_radius_x = rx + t;
     float inner_radius_y = ry - t;
     float outer_radius_y = ry + t;
-    float dt;
-    int numSegments;
-	
-	CALCULATE_CIRCLE_DT_AND_SEGMENTS(outer_radius_x > outer_radius_y? outer_radius_x : outer_radius_y);
+    float dt = (1.25f/sqrtf(outer_radius_x > outer_radius_y? outer_radius_x : outer_radius_y));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    int numSegments = (int)(2*M_PI/dt)+1;
     
     float tempx;
     float c = cosf(dt);
@@ -460,9 +450,8 @@ static void EllipseFilled(GPU_Renderer* renderer, GPU_Target* target, float x, f
     int i;
     float rot_x = cosf(degrees*RAD_PER_DEG);
     float rot_y = sinf(degrees*RAD_PER_DEG);
-    float dt;
-    int numSegments;
-	CALCULATE_CIRCLE_DT_AND_SEGMENTS(rx > ry? rx : ry);
+    float dt = (1.25f/sqrtf(rx > ry? rx : ry));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    int numSegments = (int)(2*M_PI/dt)+1;
     
     float tempx;
     float c = cosf(dt);
@@ -605,7 +594,7 @@ static void SectorFilled(GPU_Renderer* renderer, GPU_Target* target, float x, fl
     
     
     t = start_angle;
-    dt = ((end_angle - start_angle)/360)*(SDL_GPU_CIRCLE_SEGMENT_ANGLE_FACTOR/sqrtf(outer_radius)) * DEG_PER_RAD;  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+    dt = ((end_angle - start_angle)/360)*(1.25f/sqrtf(outer_radius)) * DEG_PER_RAD;  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
 
     numSegments = (int)(fabs(end_angle - start_angle)/dt);
     if(numSegments == 0)
@@ -827,9 +816,10 @@ static void RectangleRound(GPU_Renderer* renderer, GPU_Target* target, float x1,
         float t = thickness/2;
         float inner_radius = radius - t;
         float outer_radius = radius + t;
-        float dt;
-        int numSegments;
-		CALCULATE_CIRCLE_DT_AND_SEGMENTS(outer_radius);
+        float dt = (1.25f/sqrtf(outer_radius));  // s = rA, so dA = ds/r.  ds of 1.25*sqrt(radius) is good, use A in degrees.
+        int numSegments = (int)(2*PI/dt)+1;
+        if(numSegments < 4)
+            numSegments = 4;
         
         // Make a multiple of 4 so we can have even corners
         numSegments += numSegments % 4;

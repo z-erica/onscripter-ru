@@ -25,9 +25,6 @@ typedef struct GPU_RendererImpl
      * The extra parameter is used internally to reuse/reinit a target. */
 	GPU_Target* (SDLCALL *CreateTargetFromWindow)(GPU_Renderer* renderer, Uint32 windowID, GPU_Target* target);
     
-    /*! \see GPU_SetActiveTarget() */
-    GPU_bool (SDLCALL *SetActiveTarget)(GPU_Renderer* renderer, GPU_Target* target);
-    
     /*! \see GPU_CreateAliasTarget() */
 	GPU_Target* (SDLCALL *CreateAliasTarget)(GPU_Renderer* renderer, GPU_Target* target);
 
@@ -86,7 +83,7 @@ typedef struct GPU_RendererImpl
 	GPU_bool (SDLCALL *ReplaceImage)(GPU_Renderer* renderer, GPU_Image* image, SDL_Surface* surface, const GPU_Rect* surface_rect);
 	
 	/*! \see GPU_CopyImageFromSurface() */
-	GPU_Image* (SDLCALL *CopyImageFromSurface)(GPU_Renderer* renderer, SDL_Surface* surface, GPU_Rect *surface_rect);
+	GPU_Image* (SDLCALL *CopyImageFromSurface)(GPU_Renderer* renderer, SDL_Surface* surface);
 	
 	/*! \see GPU_CopyImageFromTarget() */
 	GPU_Image* (SDLCALL *CopyImageFromTarget)(GPU_Renderer* renderer, GPU_Target* target);

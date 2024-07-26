@@ -5,14 +5,17 @@
 
 #if !defined(SDL_GPU_DISABLE_OPENGL) && !defined(SDL_GPU_DISABLE_OPENGL_1_BASE)
 
-    // Hacks to fix compile errors due to polluted namespace
-    #ifdef _WIN32
-    #define _WINUSER_H
-    #define _WINGDI_H
-    #endif
+	#if defined(SDL_GPU_USE_EPOXY)
+		#include <epoxy/gl.h>
+	#else
+		// Hacks to fix compile errors due to polluted namespace
+		#ifdef _WIN32
+		#define _WINUSER_H
+		#define _WINGDI_H
+		#endif
+		#include "glew.h"
+	#endif
 
-    #include <GL/glew.h>
-	
 	#if defined(GL_EXT_bgr) && !defined(GL_BGR)
 		#define GL_BGR GL_BGR_EXT
 	#endif
@@ -52,6 +55,7 @@ typedef struct ContextData_OpenGL_1_BASE
 	GPU_ComparisonEnum last_depth_function;
 	
 	GPU_Image* last_image;
+	GPU_Target* last_target;
 	float* blit_buffer;  // Holds sets of 4 vertices and 4 tex coords interleaved (e.g. [x0, y0, z0, s0, t0, ...]).
 	unsigned short blit_buffer_num_vertices;
 	unsigned short blit_buffer_max_num_vertices;
