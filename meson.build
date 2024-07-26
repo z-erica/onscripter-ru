@@ -185,6 +185,7 @@ executable(
   'onscripter-ru',
   sources,
   dependencies: [
+    dependency('epoxy'),
     dependency('libass'),
     libavcodec_dep,
     libavformat_dep,
